@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -20,37 +20,99 @@
 
   <body>
     <div class="container">
+      <!-- Cabeçalho: título, controle de volume e checkbox para mostrar/ocultar legendas -->
       <header>
         <h2>Virtual Piano JS</h2>
         <div class="column volume-slider">
           <span>Volume</span>
           <input type="range" min="0" max="1" value="0.5" step="any" />
         </div>
+        <div class="column naming-mode">
+          <label for="naming-mode-select">Nomenclatura</label>
+          <select id="naming-mode-select">
+            <option value="anglo">Anglo (C, C#...)</option>
+            <option value="oitava">Com oitava (Dó4, Ré4...)</option>
+            <option value="both">Ambos (C / Dó4)</option>
+          </select>
+        </div>
         <div class="column keys-check">
           <span>Teclas</span> <input type="checkbox" checked />
         </div>
       </header>
+      <!-- Live region para leitores de tela: anuncia a nota tocada -->
+      <div
+        id="live-region"
+        class="sr-only"
+        aria-live="polite"
+        aria-atomic="true"
+      ></div>
+      <p class="note-feedback" id="note-feedback">
+        Toque uma tecla para ver a nota aqui.
+      </p>
+      <!-- Lista de teclas do piano. Cada <li> tem data-key correspondendo ao arquivo de áudio (ex: a -> a.wav) -->
       <ul class="piano-keys">
-        <li class="key white" data-key="a"><span>a</span></li>
-        <li class="key black" data-key="w"><span>w</span></li>
-        <li class="key white" data-key="s"><span>s</span></li>
-        <li class="key black" data-key="e"><span>e</span></li>
-        <li class="key white" data-key="d"><span>d</span></li>
-        <li class="key black" data-key="f"><span>f</span></li>
-        <li class="key white" data-key="t"><span>t</span></li>
-        <li class="key black" data-key="g"><span>g</span></li>
-        <li class="key white" data-key="y"><span>y</span></li>
-        <li class="key black" data-key="h"><span>h</span></li>
-        <li class="key white" data-key="u"><span>u</span></li>
-        <li class="key black" data-key="j"><span>j</span></li>
-        <li class="key white" data-key="k"><span>k</span></li>
-        <li class="key black" data-key="o"><span>o</span></li>
-        <li class="key white" data-key="l"><span>l</span></li>
-        <li class="key black" data-key="p"><span>p</span></li>
-        <li class="key white" data-key=";"><span>;</span></li>
+        <li>
+          <button class="key white" data-key="a"><span>a</span></button>
+        </li>
+        <li>
+          <button class="key black" data-key="w"><span>w</span></button>
+        </li>
+        <li>
+          <button class="key white" data-key="s"><span>s</span></button>
+        </li>
+        <li>
+          <button class="key black" data-key="e"><span>e</span></button>
+        </li>
+        <li>
+          <button class="key white" data-key="d"><span>d</span></button>
+        </li>
+        <li>
+          <button class="key black" data-key="f"><span>f</span></button>
+        </li>
+        <li>
+          <button class="key white" data-key="t"><span>t</span></button>
+        </li>
+        <li>
+          <button class="key black" data-key="g"><span>g</span></button>
+        </li>
+        <li>
+          <button class="key white" data-key="y"><span>y</span></button>
+        </li>
+        <li>
+          <button class="key black" data-key="h"><span>h</span></button>
+        </li>
+        <li>
+          <button class="key white" data-key="u"><span>u</span></button>
+        </li>
+        <li>
+          <button class="key black" data-key="j"><span>j</span></button>
+        </li>
+        <li>
+          <button class="key white" data-key="k"><span>k</span></button>
+        </li>
+        <li>
+          <button class="key black" data-key="o"><span>o</span></button>
+        </li>
+        <li>
+          <button class="key white" data-key="l"><span>l</span></button>
+        </li>
+        <li>
+          <button class="key black" data-key="p"><span>p</span></button>
+        </li>
+        <li>
+          <button class="key white" data-key=";"><span>;</span></button>
+        </li>
       </ul>
     </div>
 
-    <script src="./src/scripts/engine.js" defer></script>
+    <!-- Script do motor do piano: usa módulos ES para organizar o código -->
+    <script type="module">
+      import { init } from './src/scripts/main.js';
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+    </script>
   </body>
 </html>

@@ -1,7 +1,22 @@
+/* Reset básico e fonte padrão */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   outline: none;
+  /* Em produção, aplicar font-family no `body` pode ser mais performático. */
   font-family: 'Poppins', sans-serif;
+}
+
+/* Utilitário para conteúdo apenas acessível (visualmente oculto) */
+.sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }

@@ -1,9 +1,12 @@
+/* Estilos globais da página */
 body {
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
   background-color: #e3f2fd;
+  /* Observação: texto branco sobre fundo claro pode reduzir legibilidade.
+     Considere usar cor escura ou ajustar contraste conforme WCAG. */
   color: #fff;
 }
 
@@ -21,6 +24,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
 }
 
 header h2 {
@@ -84,6 +89,19 @@ header .column span {
   text-transform: uppercase;
 }
 
+/* foco visível para acessibilidade de teclado */
+.piano-keys .key:focus {
+  outline: 3px solid #ffd54f;
+  outline-offset: 4px;
+}
+
+/* remover aparência padrão de botão quando `.key` for um <button> */
+.piano-keys .key {
+  background: none;
+  border: none;
+  padding: 0;
+}
+
 .piano-keys .white {
   width: 70px;
   height: 230px;
@@ -117,10 +135,182 @@ header .column span {
 
 .piano-keys .black.active {
   box-shadow: inset -5px 5px 10px rgba(255, 255, 255, 0.1);
-  background: linear-gradient(to bottom #000, #434343);
   background: linear-gradient(to bottom, #000, #434343);
+}
+
+/* Feedback visual quando a tecla está sendo mantida (pressed)
+   diferenciamos branco/preto para preservar contraste */
+.piano-keys .white.pressed {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.28);
+  background: linear-gradient(to bottom, #f6f6f6 0%, #e6e6e6 100%);
+}
+
+.piano-keys .black.pressed {
+  transform: translateY(-1px) scale(1.01);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.32);
+  background: linear-gradient(to bottom, #111, #2b2b2b);
+  filter: brightness(1.06);
+}
+
+.piano-keys .key.is-updated {
+  animation: keyHit 140ms ease-out;
+}
+
+@keyframes keyHit {
+  0% {
+    transform: translateY(0) scale(1);
+    filter: brightness(1);
+  }
+  50% {
+    transform: translateY(-1px) scale(1.015);
+    filter: brightness(1.04);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    filter: brightness(1);
+  }
 }
 
 .piano-keys .key.hide span {
   display: none;
+}
+
+.note-feedback {
+  margin: 18px 0 0;
+  width: 100%;
+  min-height: 2.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff7d1;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 213, 79, 0.16),
+    rgba(255, 255, 255, 0.06)
+  );
+  border: 1px solid rgba(255, 213, 79, 0.32);
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+  font-size: 1.08rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 0 16px;
+}
+
+.note-feedback.is-updated {
+  animation: noteBounce 280ms ease-out;
+}
+
+@keyframes noteBounce {
+  0% {
+    transform: translateY(0) scale(1);
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0.18);
+  }
+  50% {
+    transform: translateY(-2px) scale(1.01);
+    box-shadow: 0 10px 22px rgba(255, 213, 79, 0.16);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+  }
+}
+
+/* Sugestões:
+ - Usar variáveis CSS para cores e tamanhos facilita temas e ajustes.
+ - Tornar teclas responsivas com media queries para telas pequenas.
+*/
+
+/* -----------------------------
+   Responsive: adaptações por breakpoint
+   ----------------------------- */
+
+@media (max-width: 800px) {
+  .container {
+    max-width: 100%;
+    padding: 28px;
+    border-radius: 14px;
+  }
+
+  header h2 {
+    font-size: 1.25rem;
+  }
+
+  .piano-keys .white {
+    width: 60px;
+    height: 200px;
+  }
+
+  .piano-keys .black {
+    width: 38px;
+    height: 120px;
+    margin: 0 -19px 0 -19px;
+  }
+
+  .piano-keys span {
+    font-size: 1rem;
+    bottom: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 20px;
+  }
+
+  /* Forçar rolagem horizontal do teclado em telas muito estreitas */
+  .piano-keys {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    gap: 8px;
+    padding-bottom: 8px;
+  }
+
+  .piano-keys .key {
+    flex: 0 0 auto;
+    margin-right: 6px;
+  }
+
+  .piano-keys .white {
+    width: 52px;
+    height: 170px;
+    border-radius: 6px;
+  }
+
+  .piano-keys .black {
+    width: 32px;
+    height: 110px;
+    margin: 0 -16px 0 -16px;
+  }
+
+  .note-feedback {
+    font-size: 0.95rem;
+    padding: 8px;
+    min-height: 2.25rem;
+  }
+
+  .container header {
+    gap: 8px;
+  }
+
+  .volume-slider input,
+  .keys-check input {
+    transform: scale(0.95);
+  }
+}
+
+@media (max-width: 340px) {
+  header .column {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .piano-keys span {
+    font-size: 0.95rem;
+    bottom: 12px;
+  }
 }
