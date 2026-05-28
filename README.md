@@ -2,6 +2,10 @@
 
 Projeto: simulador de piano em JavaScript (vanilla). Fornece interação por mouse, teclado físico e suporte básico a leitores de tela.
 
+Demo
+
+Teste a demo hospedada em: https://alancostaoliveira.github.io/JS-Piano/
+
 Como executar (desenvolvimento)
 
 1. Instalar dependências (necessário Node.js para scripts de teste/servidor):

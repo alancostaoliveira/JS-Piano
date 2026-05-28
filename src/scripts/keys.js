@@ -1,4 +1,12 @@
 // keys.js — define metadados das teclas e helpers de nomenclatura
+//
+// Estrutura `KEY_DEFS`:
+//  - chave: tecla do teclado físico (ex.: 'a', 'w', ';')
+//  - audio: nome do arquivo em `src/tunes/`
+//  - anglo: nome na notação anglo (C, C#...)
+//  - octave: nome com oitava em pt-BR (Dó4, Ré4...)
+//
+// Uso: import { KEY_DEFS, getAnnouncementForKey } from './keys.js'
 export const KEY_DEFS = {
   a: { audio: 'a.wav', anglo: 'C', octave: 'Dó4' },
   w: { audio: 'w.wav', anglo: 'C#', octave: 'Dó#4' },
@@ -19,6 +27,8 @@ export const KEY_DEFS = {
   ';': { audio: ';.wav', anglo: 'E', octave: 'Mi5' },
 };
 
+// Gera a string anunciada para leitores de tela com base no `namingMode`.
+// namingMode: 'anglo' | 'oitava' | 'both'
 export const getAnnouncementForKey = (key, namingMode = 'anglo') => {
   const def = KEY_DEFS[key] || {};
   const anglo = def.anglo;
